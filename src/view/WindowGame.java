@@ -27,6 +27,8 @@ public class WindowGame extends BasicGame {
 		
 		AppGameContainer app = new AppGameContainer(new WindowGame(), 1024, 768, false);
 		app.setAlwaysRender(true);
+		app.setTargetFrameRate(120);
+		app.setMinimumLogicUpdateInterval(8);
 		app.start();
 	}
 
@@ -42,7 +44,7 @@ public class WindowGame extends BasicGame {
 		this.camera = new Camera(player);
 		this.map.init();
 		this.player.init();
-		this.client = new NetworkClient(this);
+		client = new NetworkClient(this);
 	}
 
 	@Override
@@ -76,5 +78,6 @@ public class WindowGame extends BasicGame {
 			container.exit();
 		}
 		this.player.setMoving(false);
+		client.sendmove();
 	}
 }

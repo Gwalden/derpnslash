@@ -3,6 +3,8 @@ package utils;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
+import view.WindowGame;
+
 public class Network {
 
 	static public final int tcpport = 54555;
@@ -16,9 +18,13 @@ public class Network {
 		kryo.register(movePlayer.class);
 	}
 
+	static public class stopmove{
+	}
+	
 	static public class movePlayer{
 		public String name;
-		public int direction, x, y;
+		public int direction;
+		public boolean move;
 	}
 	
 	static public class addPlayer{

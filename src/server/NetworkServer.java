@@ -45,8 +45,7 @@ public class NetworkServer {
 					for (Player player : logged) {
 						if (player.name.equals(ptomove.name)){
 							player.setDirection(ptomove.direction);
-							player.setX(ptomove.x);
-							player.setY(ptomove.y);
+							player.setMoving(ptomove.move);
 						}
 					}
 					server.sendToAllUDP(ptomove);

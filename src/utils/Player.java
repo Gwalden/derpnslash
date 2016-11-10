@@ -13,7 +13,7 @@ import view.WindowGame;
 public class Player {
 
 	public int id;
-	public String name = Integer.toString((int)(Math.random()*100));
+	public String name = Integer.toString((int)(Math.random()*10000));
 
 	public String getName() {
 		return name;

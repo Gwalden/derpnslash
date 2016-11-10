@@ -51,8 +51,7 @@ public class NetworkClient {
 					for (Player player : game.listp) {
 						if (player.name.equals(ptomove.name)){
 								player.setDirection(ptomove.direction);
-							player.setX(ptomove.x);
-							player.setY(ptomove.y);
+								player.setMoving(ptomove.move);
 						}
 					}
 				}
@@ -78,6 +77,7 @@ public class NetworkClient {
 		movePlayer ptomove = new movePlayer();
 		ptomove.name = game.player.name;
 		ptomove.direction = game.player.getDirection();
+		ptomove.move = game.player.isMoving();
 		client.sendUDP(ptomove);
 	}
 }
