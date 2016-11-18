@@ -42,7 +42,6 @@ public class Player {
 			this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
 			this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -66,27 +65,25 @@ public class Player {
 		case Input.KEY_UP:
 			this.direction = 0;
 			this.moving = true;
-			WindowGame.client.sendmove();
 			break;
 		case Input.KEY_LEFT:
 			this.direction = 1;
 			this.moving = true;
-			WindowGame.client.sendmove();
 			break;
 		case Input.KEY_DOWN:
 			this.direction = 2;
 			this.moving = true;
-			WindowGame.client.sendmove();
 			break;
 		case Input.KEY_RIGHT:
 			this.direction = 3;
 			this.moving = true;
-			WindowGame.client.sendmove();
 			break;
 		}
+		if (this.moving == true)
+			WindowGame.client.sendmove();
 	}
 
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, int delta) {
 		if (this.moving) {
 			switch (this.direction) {
 			case 0:

@@ -28,7 +28,6 @@ public class WindowGame extends BasicGame {
 		AppGameContainer app = new AppGameContainer(new WindowGame(), 1024, 768, false);
 		app.setAlwaysRender(true);
 		app.setTargetFrameRate(120);
-		app.setMinimumLogicUpdateInterval(8);
 		app.start();
 	}
 
@@ -60,16 +59,11 @@ public class WindowGame extends BasicGame {
 	@Override
 	public void keyPressed(int key, char c) {
 		this.player.keyPressed(key, c);
-		
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		this.camera.update();
-		this.player.update(container, delta);
-		for (Player p : listp) {
-			p.update(container, delta);
-		}
 	}
 
 	@Override
