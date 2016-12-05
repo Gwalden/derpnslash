@@ -8,24 +8,19 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import com.esotericsoftware.kryonet.Connection;
+
 import view.WindowGame;
 
 public class Player {
 
 	public int id;
+	public Connection c;
 	public String name = Integer.toString((int)(Math.random()*10000));
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public float x = (int)(Math.random()*500), y = (int)(Math.random()*500);
 	private int direction = 0;
 	private boolean moving = false;
+	private float speed = 0.17f;
 	private Animation[] animations = new Animation[8];
 
 	public void init() {
@@ -62,19 +57,19 @@ public class Player {
 
 	public void keyPressed(int key, char c) {
 		switch (key) {
-		case Input.KEY_UP:
+		case Input.KEY_W:
 			this.direction = 0;
 			this.moving = true;
 			break;
-		case Input.KEY_LEFT:
+		case Input.KEY_A:
 			this.direction = 1;
 			this.moving = true;
 			break;
-		case Input.KEY_DOWN:
+		case Input.KEY_S:
 			this.direction = 2;
 			this.moving = true;
 			break;
-		case Input.KEY_RIGHT:
+		case Input.KEY_D:
 			this.direction = 3;
 			this.moving = true;
 			break;
@@ -87,16 +82,16 @@ public class Player {
 		if (this.moving) {
 			switch (this.direction) {
 			case 0:
-				this.y -= .1f * delta;
+				this.y -= speed * delta;
 				break;
 			case 1:
-				this.x -= .1f * delta;
+				this.x -= speed * delta;
 				break;
 			case 2:
-				this.y += .1f * delta;
+				this.y += speed * delta;
 				break;
 			case 3:
-				this.x += .1f * delta;
+				this.x += speed * delta;
 				break;
 			}
 		}
@@ -133,7 +128,15 @@ public class Player {
 	public void setY(float y) {
 		this.y = y;
 	}
+	
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	@Override
 	public String toString() {
 		return "Player [name=" + name + ", x=" + x + ", y=" + y + "]";

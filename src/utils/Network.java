@@ -15,7 +15,7 @@ public class Network {
 		kryo.register(movePlayer.class);
 		kryo.register(updatep.class);
 	}
-
+	
 	static public class stopmove{
 	}
 	
