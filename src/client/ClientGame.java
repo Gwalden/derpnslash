@@ -11,6 +11,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import utils.Attack;
 import utils.Camera;
 import utils.Event;
 import utils.Map;
@@ -18,6 +19,7 @@ import utils.Network.addPlayer;
 import utils.Network.movePlayer;
 import utils.Network.updatep;
 import utils.Player;
+import utils.Spells;
 
 public class ClientGame extends BasicGame {
 	/**
@@ -45,7 +47,8 @@ public class ClientGame extends BasicGame {
 	 */
 	public ArrayList<Player> playerl;
 
-
+	public Spells allSpell;
+	
 	private GameContainer container;
 	private Map map;
 	public Player player;
@@ -73,6 +76,7 @@ public class ClientGame extends BasicGame {
 		this.playerl = new ArrayList<>();
 		this.container = container;
 		this.map = new Map();
+		this.allSpell = new Spells();
 		this.player = new Player();
 		this.camera = new Camera(player);
 		this.map.init();
@@ -88,9 +92,11 @@ public class ClientGame extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		this.allSpell.render(container, g);
 		this.camera.render(container, g);
 		this.map.render(container, g);
 		this.player.render(container, g);
+		this.allSpell.render(container, g);
 		for (Player p : playerl) {
 			p.render(container, g);
 		}
@@ -109,7 +115,7 @@ public class ClientGame extends BasicGame {
 		this.setEventSend();
 	}
 
-	private void treatEvent(){
+	private void treatEvent() {
 		while (!gameEventReceive.isEmpty()) {
 			Event e = gameEventReceive.poll();
 			if (e.object instanceof addPlayer){
@@ -156,6 +162,9 @@ public class ClientGame extends BasicGame {
 					}
 				}
 			}
+			if (e.object instanceof Attack){
+				this.allSpell.allSpell.add((Attack) e.object);
+			}
 		}
 	}
 
@@ -177,7 +186,7 @@ public class ClientGame extends BasicGame {
 	}
 
 	/**
-	 * get all the event receiv by the server in shared list
+	 * get all the event received by the server in shared list
 	 */
 	private void getEventReceive(){
 		while (!ElistReceive.isEmpty()) {

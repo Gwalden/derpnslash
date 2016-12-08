@@ -26,7 +26,7 @@ public class ServerListener extends Listener{
 	@Override
 	public void received (Connection c, Object object) {
 		this.server.ElistReceive.add(new Event(c, object));
-		System.out.println("receive");
+		//System.out.println("receive");
 	}
 
 }

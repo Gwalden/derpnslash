@@ -3,6 +3,7 @@ package utils;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
+
 public class Network {
 
 	static public final int tcpport = 54555;
@@ -14,6 +15,9 @@ public class Network {
 		kryo.register(addPlayer.class);
 		kryo.register(movePlayer.class);
 		kryo.register(updatep.class);
+		kryo.register(attackPlayer.class);
+		kryo.register(Attack.class);
+
 	}
 	
 	static public class stopmove{
@@ -24,6 +28,15 @@ public class Network {
 		public int x, y;
 		public int direction;
 		public boolean move;
+	}
+	
+
+	static public class attackPlayer{
+		public String name;
+		public int direction, x, y, id;
+		public int pushed;
+		public boolean attacking;
+
 	}
 	
 	static public class movePlayer{
