@@ -10,7 +10,9 @@ import org.newdawn.slick.SpriteSheet;
 
 import com.esotericsoftware.kryonet.Connection;
 
-import view.WindowGame;
+import client.ClientGame;
+import utils.Network.addPlayer;
+import utils.Network.movePlayer;
 
 public class Player {
 
@@ -74,8 +76,41 @@ public class Player {
 			this.moving = true;
 			break;
 		}
-		if (this.moving == true)
-			WindowGame.client.sendmove();
+		if (this.moving == true){
+			movePlayer ptomove = new movePlayer();
+			ptomove.name = this.name;
+			ptomove.direction = this.getDirection();
+			ptomove.move = this.isMoving();
+			ClientGame.gameEventSend.add(new Event(null,ptomove));
+		}
+	}
+	
+	public void keyReleased(int key, char c) {
+		switch (key) {
+		case Input.KEY_W:
+			this.direction = 0;
+			this.moving = false;
+			break;
+		case Input.KEY_A:
+			this.direction = 1;
+			this.moving = false;
+			break;
+		case Input.KEY_S:
+			this.direction = 2;
+			this.moving = false;
+			break;
+		case Input.KEY_D:
+			this.direction = 3;
+			this.moving = false;
+			break;
+		}
+		if (this.moving == false){
+			movePlayer ptomove = new movePlayer();
+			ptomove.name = this.name;
+			ptomove.direction = this.getDirection();
+			ptomove.move = this.isMoving();
+			ClientGame.gameEventSend.add(new Event(null,ptomove));
+		}
 	}
 
 	public void update(GameContainer container, int delta) {

@@ -10,7 +10,7 @@ public class NetworkServer implements Runnable{
 	/**
 	 * Kryonet server
 	 */
-	public Server server;
+	private Server server;
 	/**
 	 * shared list of event receiv by the server
 	 */
@@ -60,11 +60,5 @@ public class NetworkServer implements Runnable{
 			}
 		}
 		this.server.close();
-	}
-	
-	
-	public static void main(String[] args) {
-		ServerGame game = new ServerGame();
-		new Thread(game).start();
 	}
 }

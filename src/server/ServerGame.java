@@ -18,7 +18,7 @@ public class ServerGame implements Runnable {
 	/**
 	 * Game iteration by second wanted
 	 */
-	public int TICK = 120;
+	public int TICK = 60;
 	/**
 	 * Optimal time for one iteration of the game
 	 */
@@ -151,5 +151,10 @@ public class ServerGame implements Runnable {
 		while (!ElistReceive.isEmpty()) {
 			this.gameEventReceive.add(ElistReceive.poll());
 		}
+	}
+	
+	public static void main(String[] args) {
+		ServerGame game = new ServerGame();
+		new Thread(game).start();
 	}
 }

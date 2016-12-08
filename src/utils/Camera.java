@@ -1,9 +1,7 @@
-package view;
+package utils;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-
-import utils.Player;
 
 public class Camera {
 
