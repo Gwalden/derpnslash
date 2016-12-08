@@ -107,6 +107,7 @@ public class ClientGame extends BasicGame {
 		this.player.keyPressed(key, c);
 	}
 
+
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		this.getEventReceive();
@@ -115,7 +116,9 @@ public class ClientGame extends BasicGame {
 		this.setEventSend();
 	}
 
-	private void treatEvent() {
+
+	
+	private void treatEvent(){
 		while (!gameEventReceive.isEmpty()) {
 			Event e = gameEventReceive.poll();
 			if (e.object instanceof addPlayer){
@@ -168,6 +171,27 @@ public class ClientGame extends BasicGame {
 		}
 	}
 
+	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		super.mouseMoved(oldx, oldy, newx, newy);
+		if (newx > this.container.getWidth()/2){
+			 player.setOrientation(3);
+		}
+		else {
+			player.setOrientation(1);
+		}
+		int help = (newx-this.container.getWidth()/2);
+		if (help == 0)
+			help++;
+		int res =((newy-this.container.getHeight()/2)*this.container.getWidth())/((help)*this.container.getHeight()); 
+		if (Math.abs(res) > 1){
+			if (newy > this.container.getHeight()/2)
+				player.setOrientation(2);
+			else
+				player.setOrientation(0);
+		}
+	}
+	
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ESCAPE == key) {
