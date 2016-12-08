@@ -7,11 +7,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-
 import com.esotericsoftware.kryonet.Connection;
-
 import client.ClientGame;
-import utils.Network.addPlayer;
 import utils.Network.movePlayer;
 
 public class Player {
@@ -21,6 +18,8 @@ public class Player {
 	public String name = Integer.toString((int)(Math.random()*10000));
 	public float x = (int)(Math.random()*500), y = (int)(Math.random()*500);
 	private int direction = 0;
+	private int orientation = 0;
+
 	private boolean moving = false;
 	private float speed = 0.17f;
 	private Animation[] animations = new Animation[8];
@@ -54,7 +53,7 @@ public class Player {
 	public void render(GameContainer container, Graphics g) {
 		g.setColor(new Color(0, 0, 0, .5f));
 		g.fillOval(x - 16, y - 8, 32, 16);
-		g.drawAnimation(animations[direction + (moving ? 4 : 0)], x-32, y-60);
+		g.drawAnimation(animations[orientation + (moving ? 4 : 0)], x-32, y-60);
 	}
 
 	public void keyPressed(int key, char c) {
@@ -112,7 +111,7 @@ public class Player {
 			ClientGame.gameEventSend.add(new Event(null,ptomove));
 		}
 	}
-
+	
 	public void update(GameContainer container, int delta) {
 		if (this.moving) {
 			switch (this.direction) {
@@ -171,6 +170,14 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(int orientation) {
+		this.orientation = orientation;
+	}
+
 	
 	@Override
 	public String toString() {
