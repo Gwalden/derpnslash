@@ -92,6 +92,7 @@ public class ServerGame implements Runnable {
 		if (spell.size() != 0) {
 			for (int i = 0 ; i < spell.size(); i++) {
 				Attack att = spell.get(i);
+				att.setId(att.getIt() + 1);
 				if ((att.getDirection() == 3) && (att.getXbeg() + 1 <= att.getXend()))
 				{
 					att.setXbeg(att.getXbeg() + 1);
@@ -130,7 +131,7 @@ public class ServerGame implements Runnable {
 			pup.x = (int)p.getX();
 			pup.y = (int)p.getY();
 			for (Player player : playerl) {
-				checkHit(player);
+				//checkHit(player);
 				this.gameEventSend.add(new Event(player.c, pup));
 			}
 		}
@@ -208,7 +209,6 @@ public class ServerGame implements Runnable {
 						att.setXend(att.getXbeg() + 100);
 					att.setDirection(((attackPlayer) e.object).direction);
 					this.spell.add(att);
-
 				}
 			}
 		}

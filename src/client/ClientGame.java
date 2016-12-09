@@ -70,13 +70,13 @@ public class ClientGame extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		ClientGame.gameEventSend = new LinkedList<>();
+		this.allSpell = new Spells();
 		this.gameEventReceive = new LinkedList<>();
 		this.ElistReceive = new ConcurrentLinkedQueue<>();
 		this.ElistSend = new ConcurrentLinkedQueue<>();
 		this.playerl = new ArrayList<>();
 		this.container = container;
 		this.map = new Map();
-		this.allSpell = new Spells();
 		this.player = new Player();
 		this.camera = new Camera(player);
 		this.map.init();
@@ -92,7 +92,6 @@ public class ClientGame extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		this.allSpell.render(container, g);
 		this.camera.render(container, g);
 		this.map.render(container, g);
 		this.player.render(container, g);
@@ -100,6 +99,7 @@ public class ClientGame extends BasicGame {
 		for (Player p : playerl) {
 			p.render(container, g);
 		}
+
 	}
 
 	@Override

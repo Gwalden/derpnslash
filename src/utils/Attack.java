@@ -15,6 +15,7 @@ public class Attack {
 	private int yend;
 	private int speed;
 	private int direction;
+	private int it = 0;
 	
 	public int getXbeg() {
 		return x;
@@ -162,5 +163,15 @@ public class Attack {
 
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+
+
+	public int getIt() {
+		return it;
+	}
+
+
+	public void setIt(int it) {
+		this.it = it;
 	}
 }

@@ -14,7 +14,10 @@ public class Spells {
 	public ArrayList<Attack> allSpell = new ArrayList<>();
 	private ArrayList<Animation> fire = new ArrayList<>();
 	
-
+/**
+ * Loading the spells
+ * @throws SlickException
+ */
 	public Spells() throws SlickException {
 		
 		
@@ -48,8 +51,7 @@ public class Spells {
 		if (allSpell.size() > 0){
 			for (int i = 0 ; i < allSpell.size(); i++) {
 				Attack att = allSpell.get(i); 
-			//	System.out.println(att);
-				g.drawAnimation(fire.get(att.getDirection()), att.getXbeg(), att.getYbeg());
+				g.drawAnimation(fire.get(att.getDirection()), att.getXbeg(),  att.getYbeg());
 			}
 			allSpell.removeAll(allSpell);
 		}

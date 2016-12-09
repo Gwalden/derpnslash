@@ -72,7 +72,7 @@ public class Player {
 		g.setColor(new Color(0, 0, 0, .5f));
 		g.fillOval(x - 16, y - 8, 32, 16);
 		if (attacking) {
-			g.drawAnimation(attAnimations[orientation + (attacking ? 4 : 0)], x-32, y-60);
+			g.drawAnimation(attAnimations[direction + (attacking ? 4 : 0)], x-32, y-60);
 		}
 		else {
 		//	g.drawAnimation(animations[direction + (moving ? 4 : 0)], x-32, y-60);
@@ -115,7 +115,7 @@ public class Player {
 		if (this.attacking == true) {
 			attackPlayer pToAttack = new attackPlayer();
 			pToAttack.name = this.name;
-
+			
 			pToAttack.x = (int) this.getX();
 			pToAttack.y = (int) this.getY();
 			pToAttack.attacking = this.attacking;
