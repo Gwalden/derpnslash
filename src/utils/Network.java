@@ -17,6 +17,7 @@ public class Network {
 		kryo.register(updatep.class);
 		kryo.register(attackPlayer.class);
 		kryo.register(Attack.class);
+		kryo.register(removePlayer.class);
 
 	}
 	
@@ -28,9 +29,14 @@ public class Network {
 		public int x, y;
 		public int direction;
 		public boolean move;
+		public int life;
 	}
 	
 
+	static public class removePlayer {
+		public String name;
+	}
+	
 	static public class attackPlayer{
 		public String name;
 		public int direction, x, y, id;

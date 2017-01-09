@@ -15,7 +15,7 @@ import utils.Network.movePlayer;
 public class Player {
 
 	public int id;
-	private int life = 100;
+	private int life = 10;
 	public Connection c;
 	public String name = Integer.toString((int)(Math.random()*10000));
 	public float x = (int)(Math.random()*500), y = (int)(Math.random()*500);
@@ -72,7 +72,7 @@ public class Player {
 		g.setColor(new Color(0, 0, 0, .5f));
 		g.fillOval(x - 16, y - 8, 32, 16);
 		if (attacking) {
-			g.drawAnimation(attAnimations[direction + (attacking ? 4 : 0)], x-32, y-60);
+			g.drawAnimation(attAnimations[orientation + (attacking ? 4 : 0)], x-32, y-60);
 		}
 		else {
 		//	g.drawAnimation(animations[direction + (moving ? 4 : 0)], x-32, y-60);
@@ -119,7 +119,7 @@ public class Player {
 			pToAttack.x = (int) this.getX();
 			pToAttack.y = (int) this.getY();
 			pToAttack.attacking = this.attacking;
-			pToAttack.direction = this.getDirection();
+			pToAttack.direction = this.getOrientation();
 			pToAttack.pushed = this.getPushed();
 			ClientGame.gameEventSend.add(new Event(null,pToAttack));
 		}

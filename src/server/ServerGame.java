@@ -7,10 +7,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.newdawn.slick.Input;
 
 import utils.Attack;
+import utils.Attacker;
 import utils.Event;
 import utils.Network.addPlayer;
 import utils.Network.attackPlayer;
 import utils.Network.movePlayer;
+import utils.Network.removePlayer;
 import utils.Network.updatep;
 import utils.Player;
 
@@ -41,7 +43,7 @@ public class ServerGame implements Runnable {
 	 */
 	private	LinkedList<Event> gameEventReceive;
 	/**
-	 * shared list of event receiv by the server
+	 * shared list of event received by the server
 	 */
 	public ConcurrentLinkedQueue<Event> ElistReceive;
 	/**
@@ -51,14 +53,18 @@ public class ServerGame implements Runnable {
 	/*
 	 * Server
 	 */
+	
 	public NetworkServer server;
 	
 	public BDD database;
-
+	
+	
+	int idSpell;
 	
 	private ArrayList<Attack> spell;
 
 	public ServerGame() {
+		this.idSpell = 0;
 		this.gameEventSend = new LinkedList<>();
 		this.gameEventReceive = new LinkedList<>();
 		this.ElistReceive = new ConcurrentLinkedQueue<>();
@@ -116,9 +122,10 @@ public class ServerGame implements Runnable {
 		}
 	}
 	
+	
+	
 	private void update(double lastupdate){
 		this.spellUpdate();
-
 		for (Player p : playerl) {
 			p.update(null, (int)((System.nanoTime() - lastupdate)/1000000));
 		}
@@ -131,7 +138,8 @@ public class ServerGame implements Runnable {
 			pup.x = (int)p.getX();
 			pup.y = (int)p.getY();
 			for (Player player : playerl) {
-				//checkHit(player);
+				checkHit(player);
+				pup.life = p.getLife();
 				this.gameEventSend.add(new Event(player.c, pup));
 			}
 		}
@@ -148,6 +156,9 @@ public class ServerGame implements Runnable {
 					System.out.println("la vie elle descend : " + player.getLife());
 					if (player.getLife() <= 0)
 					{
+						removePlayer rp = new removePlayer();
+						rp.name = player.name;
+						this.gameEventSend.add(new Event(null,player));
 						this.playerl.remove(player);
 					}
 					return true;
@@ -195,24 +206,28 @@ public class ServerGame implements Runnable {
 				}
 			}
 			else if (e.object instanceof attackPlayer) {
+				attackPlayer attack = (attackPlayer) e.object;
 				if (((attackPlayer) e.object).pushed == Input.KEY_A) {
-					Attack att = database.createAtt("fireball");
-					att.setXbeg(((attackPlayer) e.object).x + 10 ); //Le +50 est pour empecher les colisions avec le joueur
-					att.setYbeg(((attackPlayer) e .object).y - 23);
-					if (((attackPlayer) e.object).direction == 0) 
-						att.setYend(att.getYbeg() - 100);
-					else if (((attackPlayer) e.object).direction == 1) 
-						att.setXend(att.getXbeg() - 100);
-					else if (((attackPlayer) e.object).direction == 2) 
-						att.setYend(att.getYbeg() + 100);
-					else if (((attackPlayer) e.object).direction == 3) 
-						att.setXend(att.getXbeg() + 100);
-					att.setDirection(((attackPlayer) e.object).direction);
-					this.spell.add(att);
+						Attack att = database.createAtt("fireball");
+						att.setId(idSpell);
+						idSpell++;
+						att.setXbeg(((attackPlayer) e.object).x + 10 ); //Le +50 est pour empecher les colisions avec le joueur
+						att.setYbeg(((attackPlayer) e .object).y - 23);
+						if (((attackPlayer) e.object).direction == 0) 
+							att.setYend(att.getYbeg() - 100);
+						else if (((attackPlayer) e.object).direction == 1) 
+							att.setXend(att.getXbeg() - 100);
+						else if (((attackPlayer) e.object).direction == 2) 
+							att.setYend(att.getYbeg() + 100);
+						else if (((attackPlayer) e.object).direction == 3) 
+							att.setXend(att.getXbeg() + 100);
+						att.setDirection(((attackPlayer) e.object).direction);
+						this.spell.add(att);
+					}
 				}
 			}
-		}
 	}
+	
 	
 	/**
 	 * set all the event to send at the list shared

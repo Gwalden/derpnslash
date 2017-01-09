@@ -17,6 +17,7 @@ public class Attack {
 	private int direction;
 	private int it = 0;
 	
+	
 	public int getXbeg() {
 		return x;
 	}

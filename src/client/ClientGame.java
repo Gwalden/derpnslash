@@ -14,9 +14,11 @@ import org.newdawn.slick.SlickException;
 import utils.Attack;
 import utils.Camera;
 import utils.Event;
+import utils.Hud;
 import utils.Map;
 import utils.Network.addPlayer;
 import utils.Network.movePlayer;
+import utils.Network.removePlayer;
 import utils.Network.updatep;
 import utils.Player;
 import utils.Spells;
@@ -46,9 +48,9 @@ public class ClientGame extends BasicGame {
 	 * list of player
 	 */
 	public ArrayList<Player> playerl;
-
-	public Spells allSpell;
 	
+	public Spells allSpell;
+	public Hud hud;
 	private GameContainer container;
 	private Map map;
 	public Player player;
@@ -56,7 +58,7 @@ public class ClientGame extends BasicGame {
 	public static NetworkClient client;
 
 	public static void main(String[] args) throws SlickException {
-
+		
 		AppGameContainer app = new AppGameContainer(new ClientGame(), 1024, 768, false);
 		app.setAlwaysRender(true);
 		app.setTargetFrameRate(120);
@@ -71,6 +73,7 @@ public class ClientGame extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		ClientGame.gameEventSend = new LinkedList<>();
 		this.allSpell = new Spells();
+		this.hud = new Hud();
 		this.gameEventReceive = new LinkedList<>();
 		this.ElistReceive = new ConcurrentLinkedQueue<>();
 		this.ElistSend = new ConcurrentLinkedQueue<>();
@@ -90,12 +93,14 @@ public class ClientGame extends BasicGame {
 		ClientGame.gameEventSend.add(new Event(null, p));
 	}
 
+	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		this.camera.render(container, g);
 		this.map.render(container, g);
 		this.player.render(container, g);
 		this.allSpell.render(container, g);
+	    this.hud.render(container,g, playerl, player);
 		for (Player p : playerl) {
 			p.render(container, g);
 		}
@@ -116,8 +121,6 @@ public class ClientGame extends BasicGame {
 		this.setEventSend();
 	}
 
-
-	
 	private void treatEvent(){
 		while (!gameEventReceive.isEmpty()) {
 			Event e = gameEventReceive.poll();
@@ -153,6 +156,7 @@ public class ClientGame extends BasicGame {
 					this.player.y = ptoup.y;
 					this.player.setDirection(ptoup.direction);
 					this.player.setMoving(ptoup.move);
+					this.player.setLife(ptoup.life);
 					return;
 				}
 				for (Player player : this.playerl) {
@@ -161,12 +165,34 @@ public class ClientGame extends BasicGame {
 						player.y = ptoup.y;
 						player.setDirection(ptoup.direction);
 						player.setMoving(ptoup.move);
+						player.setLife(ptoup.life);
 						break;
 					}
 				}
 			}
+			
+			if (e.object instanceof removePlayer){
+					for (int i = 0; i <this.playerl.size(); i++) 
+					{
+						if (playerl.get(i).getName().equals(((removePlayer)e.object).name)) 
+						{
+							this.playerl.remove(i);
+						}
+					}
+				}
 			if (e.object instanceof Attack){
-				this.allSpell.allSpell.add((Attack) e.object);
+				int i;
+				if ( (i = this.allSpell.allSpell.indexOf((Attack) e.object)) != -1)
+				{
+					this.allSpell.allSpell.set(i, (Attack) e.object);
+				}
+				else
+					this.allSpell.allSpell.add((Attack) e.object);
+			}
+			if (e.object instanceof Player){
+				if (playerl.contains((Player)e.object)) {
+					playerl.remove((Player)e.object);
+				}
 			}
 		}
 	}
