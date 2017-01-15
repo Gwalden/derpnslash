@@ -31,15 +31,28 @@ public class NetworkServer implements Runnable{
 		this.ElistReceive = game.ElistReceive;
 		this.ElistSend = game.ElistSend;
 		server.addListener(new ThreadedListener(new ServerListener(this)));
-		try {
-				server.bind(Network.tcpport, Network.udpport);	
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	}
+	
+	public int init(){
+		int port = this.bind(Network.tcpport+1, Network.udpport+1);
 		server.start();
+		return port;
 	}
 
-	
+	private int bind(int tcpport, int udpport){
+		int port = tcpport;
+		int timeout = 5000;
+		while (timeout > 0){
+			try {
+				server.bind(port, port+1);
+				return port;
+			} catch (Exception e) {
+				port++;
+				timeout--;
+			}
+		}
+		return -1;
+	}
 	
 	@Override
 	public void run() {

@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -13,12 +14,15 @@ import org.newdawn.slick.SlickException;
 
 import utils.Attack;
 import utils.Camera;
+import utils.Effect;
 import utils.Event;
 import utils.Hud;
 import utils.Map;
 import utils.Network.addPlayer;
 import utils.Network.movePlayer;
+import utils.Network.removeEffect;
 import utils.Network.removePlayer;
+import utils.Network.removeSpell;
 import utils.Network.updatep;
 import utils.Player;
 import utils.Spells;
@@ -37,7 +41,7 @@ public class ClientGame extends BasicGame {
 	 */
 	private	LinkedList<Event> gameEventReceive;
 	/**
-	 * shared list of event receiv by the server
+	 * shared list of event received by the server
 	 */
 	public ConcurrentLinkedQueue<Event> ElistReceive;
 	/**
@@ -56,17 +60,22 @@ public class ClientGame extends BasicGame {
 	public Player player;
 	private Camera camera;
 	public static NetworkClient client;
+	
+	public int tcpport;
+	public int udpport;
 
-	public static void main(String[] args) throws SlickException {
+	/*public static void main(String[] args) throws SlickException {
 		
 		AppGameContainer app = new AppGameContainer(new ClientGame(), 1024, 768, false);
 		app.setAlwaysRender(true);
 		app.setTargetFrameRate(120);
 		app.start();
 	}
-
-	public ClientGame() {
+*/
+	public ClientGame(int tport, int uport) {
 		super("derpnslash");
+		this.tcpport = tport;
+		this.udpport= uport;
 	}
 
 	@Override
@@ -104,7 +113,6 @@ public class ClientGame extends BasicGame {
 		for (Player p : playerl) {
 			p.render(container, g);
 		}
-
 	}
 
 	@Override
@@ -175,42 +183,59 @@ public class ClientGame extends BasicGame {
 					for (int i = 0; i <this.playerl.size(); i++) 
 					{
 						if (playerl.get(i).getName().equals(((removePlayer)e.object).name)) 
-						{
 							this.playerl.remove(i);
-						}
 					}
 				}
-			if (e.object instanceof Attack){
-				int i;
-				if ( (i = this.allSpell.allSpell.indexOf((Attack) e.object)) != -1)
-				{
-					this.allSpell.allSpell.set(i, (Attack) e.object);
+
+			if (e.object instanceof removeSpell){
+					for (int i = 0; i < this.allSpell.allSpell.size(); i++) 
+					{
+						if (this.allSpell.allSpell.get(i).getId() == ((removeSpell)e.object).id) 
+							this.allSpell.allSpell.remove(i);
+					}
 				}
-				else
+			
+			if (e.object instanceof Attack){
+				int i = 0;
+				boolean check = false;
+				for (; i < this.allSpell.allSpell.size(); i++)
+				{
+					if (this.allSpell.allSpell.get(i).getId() == ((Attack)e.object).getId()) 
+					{
+						check = true;
+						this.allSpell.allSpell.get(i).setXbeg(((Attack)e.object).getXbeg());
+						this.allSpell.allSpell.get(i).setYbeg(((Attack)e.object).getYbeg());
+					}
+				}
+				if (!check) {
 					this.allSpell.allSpell.add((Attack) e.object);
+				}
 			}
 			if (e.object instanceof Player){
 				if (playerl.contains((Player)e.object)) {
 					playerl.remove((Player)e.object);
 				}
 			}
+			
+			if (e.object instanceof Effect){
+				}
 		}
 	}
 
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		super.mouseMoved(oldx, oldy, newx, newy);
+		super.mouseMoved(oldx, oldy, newx, newy);	
 		if (newx > this.container.getWidth()/2){
 			 player.setOrientation(3);
 		}
 		else {
 			player.setOrientation(1);
 		}
-		int help = (newx-this.container.getWidth()/2);
-		if (help == 0)
-			help++;
-		int res =((newy-this.container.getHeight()/2)*this.container.getWidth())/((help)*this.container.getHeight()); 
-		if (Math.abs(res) > 1){
+		int checkdiv = (newx-this.container.getWidth()/2);
+		if (checkdiv == 0)
+			checkdiv=1;
+		double res =((newy-this.container.getHeight()/2)*this.container.getWidth())/((checkdiv)*this.container.getHeight()); 
+		if (Math.abs(res) > 1/1.3){
 			if (newy > this.container.getHeight()/2)
 				player.setOrientation(2);
 			else

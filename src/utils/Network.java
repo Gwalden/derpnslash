@@ -18,7 +18,48 @@ public class Network {
 		kryo.register(attackPlayer.class);
 		kryo.register(Attack.class);
 		kryo.register(removePlayer.class);
-
+		kryo.register(Effect.class);
+		kryo.register(removeSpell.class);
+		kryo.register(removeEffect.class);
+	}
+	
+	static public void logregister(EndPoint endPoint){
+		Kryo kryo = endPoint.getKryo();
+		kryo.register(login.class);
+		kryo.register(loginok.class);
+		kryo.register(selectclass.class);
+		kryo.register(gamestart.class);
+		kryo.register(errorlogin.class);
+	}
+	
+	static public class login{
+		public String login;
+		public String password;
+	}
+	
+	static public class errorlogin{
+		public String error;
+	}
+	
+	static public class loginok{
+	}
+	
+	static public class selectclass{
+		public int selected;
+	}
+	
+	static public class gamestart{
+		public int tcpport;
+		public int udpport;
+	}
+	
+	static public class createplayer{
+		public int classe;
+	}
+	
+	static public class playercreated{
+		public int classe;
+		public int x,y;
 	}
 	
 	static public class stopmove{
@@ -33,6 +74,14 @@ public class Network {
 	}
 	
 
+	static public class removeSpell {
+		public int id;
+	}
+	
+	static public class removeEffect {
+		public int id;
+
+	}
 	static public class removePlayer {
 		public String name;
 	}
@@ -42,7 +91,8 @@ public class Network {
 		public int direction, x, y, id;
 		public int pushed;
 		public boolean attacking;
-
+		public String type;
+		public int team;
 	}
 	
 	static public class movePlayer{

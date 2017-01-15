@@ -1,7 +1,13 @@
 package utils;
 
+/**
+ * Class that will store every information needed for all the attacks.
+ * @author Léo
+ *
+ */
 public class Attack {
 	
+	private int team;
 	private int id;
 	private String name;
 	private String effect;
@@ -174,5 +180,15 @@ public class Attack {
 
 	public void setIt(int it) {
 		this.it = it;
+	}
+
+
+	public int getTeam() {
+		return team;
+	}
+
+
+	public void setTeam(int team) {
+		this.team = team;
 	}
 }

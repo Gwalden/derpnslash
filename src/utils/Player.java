@@ -1,5 +1,9 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -14,23 +18,34 @@ import utils.Network.movePlayer;
 
 public class Player {
 
+	private String type = "hunter";	
+	public SpellLauncher sl = new SpellLauncher();
+	private int team = 2;
 	public int id;
-	private int life = 10;
+	private int life = 100;
 	public Connection c;
 	public String name = Integer.toString((int)(Math.random()*10000));
 	public float x = (int)(Math.random()*500), y = (int)(Math.random()*500);
 	private int direction = 0;
+	public List<Effect> effectL = new ArrayList<>(); 
 	private int orientation = 0;
-
 	private boolean moving = false;
 	private boolean attacking = false;
 	private float speed = 0.17f;
 	private Animation[] animations = new Animation[8];
 	private Animation[] attAnimations = new Animation[8];
-
+	public Color rond;
 	private int pushed;
+	private boolean disable = false;
 
+	
+	public LinkedList<Integer> movelist;
+
+	
+	
 	public void init() {
+		movelist= new LinkedList<>();
+		rond = new Color(0, 0, 0);
 		SpriteSheet spriteSheet;
 		try {
 			spriteSheet = new SpriteSheet("ressources/ElfeRanger.png", 64, 64);
@@ -69,7 +84,7 @@ public class Player {
 	}
 
 	public void render(GameContainer container, Graphics g) {
-		g.setColor(new Color(0, 0, 0, .5f));
+		g.setColor(rond);
 		g.fillOval(x - 16, y - 8, 32, 16);
 		if (attacking) {
 			g.drawAnimation(attAnimations[orientation + (attacking ? 4 : 0)], x-32, y-60);
@@ -83,39 +98,45 @@ public class Player {
 	public void keyPressed(int key, char c) {
 		switch (key) {
 		case Input.KEY_Z:
-			this.direction = 0;
-			this.moving = true;
+			this.movelist.add(0);
+			this.sendmove();
 			break;
 		case Input.KEY_Q:
-			this.direction = 1;
-			this.moving = true;
+			this.movelist.add(1);
+			this.sendmove();
 			break;
 		case Input.KEY_S:
-			this.direction = 2;
-			this.moving = true;
+			this.movelist.add(2);
+			this.sendmove();
 			break;
 		case Input.KEY_D:
-			this.direction = 3;
-			this.moving = true;
+			this.movelist.add(3);
+			this.sendmove();
 			break;
 		case Input.KEY_A:
-			this.setPushed(key);
-			this.attacking = true;
+			if (!disable) {
+				this.setPushed(key);
+				this.attacking = true;
+			}
+			break;
+		case Input.KEY_E:
+			if (!disable) {
+				this.setPushed(key);
+				this.attacking = true;
+			}
+		case Input.KEY_R:
+			if (!disable) {
+				this.setPushed(key);
+				this.attacking = true;
+			}
 			break;
 
 		}
-		if (this.moving == true){
-			movePlayer ptomove = new movePlayer();
-			ptomove.name = this.name;
-			ptomove.direction = this.getDirection();
-			ptomove.move = this.isMoving();
-			ClientGame.gameEventSend.add(new Event(null,ptomove));
-		}
-		
 		if (this.attacking == true) {
 			attackPlayer pToAttack = new attackPlayer();
 			pToAttack.name = this.name;
-			
+			pToAttack.team = this.team;
+			pToAttack.type = this.type;
 			pToAttack.x = (int) this.getX();
 			pToAttack.y = (int) this.getY();
 			pToAttack.attacking = this.attacking;
@@ -128,22 +149,28 @@ public class Player {
 	public void keyReleased(int key, char c) {
 		switch (key) {
 		case Input.KEY_Z:
-			this.direction = 0;
-			this.moving = false;
+			movelist.remove(new Integer(0));
+			this.sendmove();
 			break;
 		case Input.KEY_Q:
-			this.direction = 1;
-			this.moving = false;
+			movelist.remove(new Integer(1));
+			this.sendmove();
 			break;
 		case Input.KEY_S:
-			this.direction = 2;
-			this.moving = false;
+			movelist.remove(new Integer(2));
+			this.sendmove();
 			break;
 		case Input.KEY_D:
-			this.direction = 3;
-			this.moving = false;
+			movelist.remove(new Integer(3));
+			this.sendmove();
 			break;
 		case Input.KEY_A:
+			this.attacking = false;
+			break;
+		case Input.KEY_E:
+			this.attacking = false;
+			break;
+		case Input.KEY_R:
 			this.attacking = false;
 			break;
 		}
@@ -154,6 +181,21 @@ public class Player {
 			ptomove.move = this.isMoving();
 			ClientGame.gameEventSend.add(new Event(null,ptomove));
 		}
+	}
+	
+	private void sendmove(){
+		if (movelist.isEmpty()){
+			this.moving = false;
+		}
+		else{
+			this.moving = true;
+			this.direction = movelist.getLast();
+		}
+		movePlayer ptomove = new movePlayer();
+		ptomove.name = this.name;
+		ptomove.direction = this.getDirection();
+		ptomove.move = this.isMoving();
+		ClientGame.gameEventSend.add(new Event(null,ptomove));
 	}
 	
 	public void update(GameContainer container, int delta) {
@@ -172,6 +214,22 @@ public class Player {
 				this.x += speed * delta;
 				break;
 			}
+		}
+	}
+	
+	public void effChange(Effect eff) {
+		if (eff.getName().equals("frost")) {
+			setSpeed(0.07f);
+			this.rond = new Color(121, 248, 248);
+		}
+		else if (eff.getName().equals("root")) {
+			setSpeed(0.0f);
+			this.rond = new Color(255,255,255);
+		}
+		else if (eff.getName().equals("stun")) {
+			setSpeed(0.0f);
+			this.disable = true;
+			this.rond = new Color(255,255,255);
 		}
 	}
 
@@ -215,6 +273,15 @@ public class Player {
 		this.y = y;
 	}
 	
+	
+	public float getSpeed() {
+		return this.speed;
+	}
+	
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -230,7 +297,14 @@ public class Player {
 		this.orientation = orientation;
 	}
 
+	public void reput() {
+		if (this.effectL.size() == 0)
+			this.setSpeed(0.17f);
+	}
 	
+	public void addEffect(Effect effect) {
+		this.effectL.add(effect);	
+	}
 	@Override
 	public String toString() {
 		return "Player [name=" + name + ", x=" + x + ", y=" + y + "]";
@@ -248,5 +322,23 @@ public class Player {
 	}
 	public void setLife(int life) {
 		this.life = life;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public int getTeam() {
+		return team;
+	}
+	public void setTeam(int team) {
+		this.team = team;
+	}
+	public SpellLauncher getSl() {
+		return sl;
+	}
+	public void setSl(SpellLauncher sl) {
+		this.sl = sl;
 	}
 }

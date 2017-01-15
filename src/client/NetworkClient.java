@@ -44,7 +44,7 @@ public class NetworkClient implements Runnable{
 		client.addListener(new ThreadedListener(new ClientListener(this)));
 		client.start();
 		try {
-			client.connect(5000, Network.host, Network.tcpport, Network.udpport);
+			client.connect(5000, Network.host, game.tcpport, game.udpport);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
