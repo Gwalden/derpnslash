@@ -314,16 +314,26 @@ public class ServerGame implements Runnable {
 								if (this.playerl.get(i).getSl().getA() <= 0) {
 									Attack att = database.createAtt("fireBall",idSpell,((attackPlayer) e.object).team);
 									idSpell++;
-									att.setXbeg(((attackPlayer) e.object).x + 10 );
-									att.setYbeg(((attackPlayer) e .object).y - 23);
-									if (((attackPlayer) e.object).direction == 0) 
-										att.setYend(att.getYbeg() - 100);
-									else if (((attackPlayer) e.object).direction == 1) 
+									if (((attackPlayer) e.object).direction == 0) {
+										att.setXbeg(((attackPlayer) e.object).x  - 10);
+										att.setYbeg(((attackPlayer) e .object).y - 100);
+										att.setYend(att.getYbeg() - 120);
+									}
+									else if (((attackPlayer) e.object).direction == 1) {
+										att.setXbeg(((attackPlayer) e.object).x - 70 );
+										att.setYbeg(((attackPlayer) e .object).y - 30);
 										att.setXend(att.getXbeg() - 100);
-									else if (((attackPlayer) e.object).direction == 2) 
+									}
+									else if (((attackPlayer) e.object).direction == 2) {
+										att.setXbeg(((attackPlayer) e.object).x - 10 );
+										att.setYbeg(((attackPlayer) e .object).y - 23);
 										att.setYend(att.getYbeg() + 100);
-									else if (((attackPlayer) e.object).direction == 3) 
+									}
+									else if (((attackPlayer) e.object).direction == 3) {	
+										att.setXbeg(((attackPlayer) e.object).x + 20 );
+										att.setYbeg(((attackPlayer) e .object).y - 30);
 										att.setXend(att.getXbeg() + 100);
+									}
 									att.setDirection(((attackPlayer) e.object).direction);
 									this.spell.add(att);
 									this.playerl.get(i).sl.setA(5000);
@@ -339,16 +349,26 @@ public class ServerGame implements Runnable {
 								if (this.playerl.get(i).getSl().getE() <= 0) {
 									Attack att = database.createAtt("shadowBall", idSpell,((attackPlayer) e.object).team);
 									idSpell++;
-									att.setXbeg(((attackPlayer) e.object).x + 10 );
-									att.setYbeg(((attackPlayer) e .object).y - 23);
-									if (((attackPlayer) e.object).direction == 0) 
-										att.setYend(att.getYbeg() - 200);
-									else if (((attackPlayer) e.object).direction == 1) 
-										att.setXend(att.getXbeg() - 200);
-									else if (((attackPlayer) e.object).direction == 2) 
-										att.setYend(att.getYbeg() + 200);
-									else if (((attackPlayer) e.object).direction == 3) 
-										att.setXend(att.getXbeg() + 200);
+									if (((attackPlayer) e.object).direction == 0) {
+										att.setXbeg(((attackPlayer) e.object).x  - 10);
+										att.setYbeg(((attackPlayer) e .object).y - 100);
+										att.setYend(att.getYbeg() - 120);
+									}
+									else if (((attackPlayer) e.object).direction == 1) {
+										att.setXbeg(((attackPlayer) e.object).x - 70 );
+										att.setYbeg(((attackPlayer) e .object).y - 30);
+										att.setXend(att.getXbeg() - 100);
+									}
+									else if (((attackPlayer) e.object).direction == 2) {
+										att.setXbeg(((attackPlayer) e.object).x - 10 );
+										att.setYbeg(((attackPlayer) e .object).y - 23);
+										att.setYend(att.getYbeg() + 100);
+									}
+									else if (((attackPlayer) e.object).direction == 3) {	
+										att.setXbeg(((attackPlayer) e.object).x + 20 );
+										att.setYbeg(((attackPlayer) e .object).y - 30);
+										att.setXend(att.getXbeg() + 100);
+									}
 									att.setDirection(((attackPlayer) e.object).direction);
 									this.spell.add(att);
 									this.playerl.get(i).sl.setE(5000);
@@ -364,16 +384,26 @@ public class ServerGame implements Runnable {
 								if (this.playerl.get(i).getSl().getR() <= 0) {
 								Attack att = database.createAtt("lightBall", idSpell,((attackPlayer) e.object).team);
 								idSpell++;
-								att.setXbeg(((attackPlayer) e.object).x + 10 );
-								att.setYbeg(((attackPlayer) e .object).y - 23);
-								if (((attackPlayer) e.object).direction == 0) 
-									att.setYend(att.getYbeg() - 200);
-								else if (((attackPlayer) e.object).direction == 1) 
-									att.setXend(att.getXbeg() - 200);
-								else if (((attackPlayer) e.object).direction == 2) 
-									att.setYend(att.getYbeg() + 200);
-								else if (((attackPlayer) e.object).direction == 3) 
-									att.setXend(att.getXbeg() + 200);
+								if (((attackPlayer) e.object).direction == 0) {
+									att.setXbeg(((attackPlayer) e.object).x  - 10);
+									att.setYbeg(((attackPlayer) e .object).y - 100);
+									att.setYend(att.getYbeg() - 120);
+								}
+								else if (((attackPlayer) e.object).direction == 1) {
+									att.setXbeg(((attackPlayer) e.object).x - 70 );
+									att.setYbeg(((attackPlayer) e .object).y - 30);
+									att.setXend(att.getXbeg() - 100);
+								}
+								else if (((attackPlayer) e.object).direction == 2) {
+									att.setXbeg(((attackPlayer) e.object).x - 10 );
+									att.setYbeg(((attackPlayer) e .object).y - 23);
+									att.setYend(att.getYbeg() + 100);
+								}
+								else if (((attackPlayer) e.object).direction == 3) {	
+									att.setXbeg(((attackPlayer) e.object).x + 20 );
+									att.setYbeg(((attackPlayer) e .object).y - 30);
+									att.setXend(att.getXbeg() + 100);
+								}
 								att.setDirection(((attackPlayer) e.object).direction);
 								this.spell.add(att);
 								this.playerl.get(i).sl.setR(5000);
@@ -391,16 +421,26 @@ public class ServerGame implements Runnable {
 
 								Attack att = database.createAtt("frostArrow",idSpell,((attackPlayer) e.object).team);
 								idSpell++;
-								att.setXbeg(((attackPlayer) e.object).x + 10 );
-								att.setYbeg(((attackPlayer) e .object).y - 23);
-								if (((attackPlayer) e.object).direction == 0) 
-									att.setYend(att.getYbeg() - 100);
-								else if (((attackPlayer) e.object).direction == 1) 
+								if (((attackPlayer) e.object).direction == 0) {
+									att.setXbeg(((attackPlayer) e.object).x  - 10);
+									att.setYbeg(((attackPlayer) e .object).y - 100);
+									att.setYend(att.getYbeg() - 120);
+								}
+								else if (((attackPlayer) e.object).direction == 1) {
+									att.setXbeg(((attackPlayer) e.object).x - 70 );
+									att.setYbeg(((attackPlayer) e .object).y - 30);
 									att.setXend(att.getXbeg() - 100);
-								else if (((attackPlayer) e.object).direction == 2) 
+								}
+								else if (((attackPlayer) e.object).direction == 2) {
+									att.setXbeg(((attackPlayer) e.object).x - 10 );
+									att.setYbeg(((attackPlayer) e .object).y - 23);
 									att.setYend(att.getYbeg() + 100);
-								else if (((attackPlayer) e.object).direction == 3) 
+								}
+								else if (((attackPlayer) e.object).direction == 3) {	
+									att.setXbeg(((attackPlayer) e.object).x + 20 );
+									att.setYbeg(((attackPlayer) e .object).y - 30);
 									att.setXend(att.getXbeg() + 100);
+								}
 								att.setDirection(((attackPlayer) e.object).direction);
 								this.spell.add(att);
 								this.playerl.get(i).sl.setA(5000);
@@ -417,16 +457,26 @@ public class ServerGame implements Runnable {
 
 								Attack att = database.createAtt("pinkArrow", idSpell,((attackPlayer) e.object).team);
 								idSpell++;
-								att.setXbeg(((attackPlayer) e.object).x + 10 );
-								att.setYbeg(((attackPlayer) e .object).y - 23);
-								if (((attackPlayer) e.object).direction == 0) 
-									att.setYend(att.getYbeg() - 200);
-								else if (((attackPlayer) e.object).direction == 1) 
-									att.setXend(att.getXbeg() - 200);
-								else if (((attackPlayer) e.object).direction == 2) 
-									att.setYend(att.getYbeg() + 200);
-								else if (((attackPlayer) e.object).direction == 3) 
-									att.setXend(att.getXbeg() + 200);
+								if (((attackPlayer) e.object).direction == 0) {
+									att.setXbeg(((attackPlayer) e.object).x  - 10);
+									att.setYbeg(((attackPlayer) e .object).y - 100);
+									att.setYend(att.getYbeg() - 120);
+								}
+								else if (((attackPlayer) e.object).direction == 1) {
+									att.setXbeg(((attackPlayer) e.object).x - 70 );
+									att.setYbeg(((attackPlayer) e .object).y - 30);
+									att.setXend(att.getXbeg() - 100);
+								}
+								else if (((attackPlayer) e.object).direction == 2) {
+									att.setXbeg(((attackPlayer) e.object).x - 10 );
+									att.setYbeg(((attackPlayer) e .object).y - 23);
+									att.setYend(att.getYbeg() + 100);
+								}
+								else if (((attackPlayer) e.object).direction == 3) {	
+									att.setXbeg(((attackPlayer) e.object).x + 20 );
+									att.setYbeg(((attackPlayer) e .object).y - 30);
+									att.setXend(att.getXbeg() + 100);
+								}
 								att.setDirection(((attackPlayer) e.object).direction);
 								this.spell.add(att);
 								this.playerl.get(i).sl.setE(5000);
@@ -507,7 +557,7 @@ public class ServerGame implements Runnable {
 		att.setXbeg(attacker.x + 10 );
 		att.setYbeg(attacker.y - 23);
 		att.setXend(att.getXbeg() + 200);
-		att.setYend(att.getYbeg() + 200);
+		att.setYend(att.getYbeg() + 250);
 		att.setDirection(6);
 		this.spell.add(att);
 		

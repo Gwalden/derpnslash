@@ -18,7 +18,7 @@ import utils.Network.movePlayer;
 
 public class Player {
 
-	private String type = "hunter";	
+	private String type = "wizard";	
 	public SpellLauncher sl = new SpellLauncher();
 	private int team = 2;
 	public int id;
@@ -45,8 +45,11 @@ public class Player {
 	
 	public void init() {
 		movelist= new LinkedList<>();
+		String ressources;
 		rond = new Color(0, 0, 0);
 		SpriteSheet spriteSheet;
+		if (this.type.equals("hunter"))
+		{
 		try {
 			spriteSheet = new SpriteSheet("ressources/ElfeRanger.png", 64, 64);
 			this.animations[0] = loadAnimation(spriteSheet, 0, 1, 8);
@@ -74,6 +77,40 @@ public class Player {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		
+		}
+		else{
+			try {
+				spriteSheet = new SpriteSheet("ressources/DarkWitch.png", 64, 64);
+				this.animations[0] = loadAnimation(spriteSheet, 0, 1, 8);
+				this.animations[1] = loadAnimation(spriteSheet, 0, 1, 9);
+				this.animations[2] = loadAnimation(spriteSheet, 0, 1, 10);
+				this.animations[3] = loadAnimation(spriteSheet, 0, 1, 11);
+				this.animations[4] = loadAnimation(spriteSheet, 1, 9, 8);
+				this.animations[5] = loadAnimation(spriteSheet, 1, 9, 9);
+				this.animations[6] = loadAnimation(spriteSheet, 1, 9, 10);
+				this.animations[7] = loadAnimation(spriteSheet, 1, 9, 11);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				spriteSheet = new SpriteSheet("ressources/DarkWitch.png", 64, 64);
+				this.attAnimations [0] = loadAnimation(spriteSheet, 0, 1, 12);
+				this.attAnimations[1] = loadAnimation(spriteSheet, 0, 1, 13);
+				this.attAnimations[2] = loadAnimation(spriteSheet, 0, 1, 14);
+				this.attAnimations[3] = loadAnimation(spriteSheet, 0, 1, 15);
+				this.attAnimations[4] = loadAnimation(spriteSheet, 1, 13, 12);
+				this.attAnimations[5] = loadAnimation(spriteSheet, 1, 13, 13);
+				this.attAnimations[6] = loadAnimation(spriteSheet, 1, 13,14);
+				this.attAnimations[7] = loadAnimation(spriteSheet, 1, 13, 15);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
 	}
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 		Animation animation = new Animation();
