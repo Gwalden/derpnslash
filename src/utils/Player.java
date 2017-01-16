@@ -97,11 +97,11 @@ public class Player {
 
 	public void keyPressed(int key, char c) {
 		switch (key) {
-		case Input.KEY_Z:
+		case Input.KEY_W:
 			this.movelist.add(0);
 			this.sendmove();
 			break;
-		case Input.KEY_Q:
+		case Input.KEY_A:
 			this.movelist.add(1);
 			this.sendmove();
 			break;
@@ -113,7 +113,7 @@ public class Player {
 			this.movelist.add(3);
 			this.sendmove();
 			break;
-		case Input.KEY_A:
+		case Input.KEY_Q:
 			if (!disable) {
 				this.setPushed(key);
 				this.attacking = true;
@@ -148,11 +148,11 @@ public class Player {
 	
 	public void keyReleased(int key, char c) {
 		switch (key) {
-		case Input.KEY_Z:
+		case Input.KEY_W:
 			movelist.remove(new Integer(0));
 			this.sendmove();
 			break;
-		case Input.KEY_Q:
+		case Input.KEY_A:
 			movelist.remove(new Integer(1));
 			this.sendmove();
 			break;
@@ -164,7 +164,7 @@ public class Player {
 			movelist.remove(new Integer(3));
 			this.sendmove();
 			break;
-		case Input.KEY_A:
+		case Input.KEY_Q:
 			this.attacking = false;
 			break;
 		case Input.KEY_E:
