@@ -104,6 +104,7 @@ public class Network {
 	static public class addPlayer{
 		public String name;
 		public int x, y;
+		public int team;
 		public String type;
 	}
 }

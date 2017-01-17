@@ -20,7 +20,7 @@ public class Player {
 
 	private String type;	
 	public SpellLauncher sl = new SpellLauncher();
-	private int team = 2;
+	private int team;
 	public int id;
 	private int life = 100;
 	public Connection c;

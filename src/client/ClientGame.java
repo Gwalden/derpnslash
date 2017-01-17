@@ -64,6 +64,8 @@ public class ClientGame extends BasicGame {
 	public int tcpport;
 	public int udpport;
 
+	
+	public static int team = 0;
 	/*public static void main(String[] args) throws SlickException {
 		
 		AppGameContainer app = new AppGameContainer(new ClientGame(), 1024, 768, false);
@@ -103,6 +105,7 @@ public class ClientGame extends BasicGame {
 		addPlayer p = new addPlayer();
 		p.type = this.player.getType();
 		p.name = this.player.getName();
+		p.team = this.player.getTeam();
 		p.x = (int)this.player.getX();
 		p.y = (int)this.player.getY();
 		ClientGame.gameEventSend.add(new Event(null, p));

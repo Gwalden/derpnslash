@@ -63,6 +63,7 @@ public class ServerGame implements Runnable {
 	
 	private int idSpell;
 	private int idEff;
+	private int team = 0;
 	
 	private ArrayList<Attack> spell;
 
@@ -276,6 +277,8 @@ public class ServerGame implements Runnable {
 					p.c = e.c;
 					p.setType(ptoadd.type);
 					p.setName(ptoadd.name);
+					p.setTeam(team);
+					team++;
 					p.setX(ptoadd.x);
 					p.setY(ptoadd.y);
 					p.setMoving(false);
@@ -290,6 +293,7 @@ public class ServerGame implements Runnable {
 					this.playerl.add(p);
 					addPlayer pto = new addPlayer();
 					pto.name = p.getName();
+					pto.team = p.getTeam();
 					pto.type = p.getType();
 					pto.x = (int)p.getX();
 					pto.y = (int)p.getY();
@@ -315,7 +319,7 @@ public class ServerGame implements Runnable {
 							if (attack.name.equals(this.playerl.get(i).getName()))
 							{
 								if (this.playerl.get(i).getSl().getA() <= 0) {
-									Attack att = database.createAtt("fireBall",idSpell,((attackPlayer) e.object).team);
+									Attack att = database.createAtt("fireBall",idSpell,this.playerl.get(i).getTeam());
 									idSpell++;
 									if (((attackPlayer) e.object).direction == 0) {
 										att.setXbeg(((attackPlayer) e.object).x  - 10);
@@ -350,7 +354,7 @@ public class ServerGame implements Runnable {
 							if (attack.name.equals(this.playerl.get(i).getName()))
 							{
 								if (this.playerl.get(i).getSl().getE() <= 0) {
-									Attack att = database.createAtt("shadowBall", idSpell,((attackPlayer) e.object).team);
+									Attack att = database.createAtt("shadowBall", idSpell,this.playerl.get(i).getTeam());
 									idSpell++;
 									if (((attackPlayer) e.object).direction == 0) {
 										att.setXbeg(((attackPlayer) e.object).x  - 10);
@@ -385,7 +389,7 @@ public class ServerGame implements Runnable {
 							if (attack.name.equals(this.playerl.get(i).getName()))
 							{
 								if (this.playerl.get(i).getSl().getR() <= 0) {
-								Attack att = database.createAtt("lightBall", idSpell,((attackPlayer) e.object).team);
+								Attack att = database.createAtt("lightBall", idSpell,this.playerl.get(i).getTeam());
 								idSpell++;
 								if (((attackPlayer) e.object).direction == 0) {
 									att.setXbeg(((attackPlayer) e.object).x  - 10);
@@ -422,7 +426,7 @@ public class ServerGame implements Runnable {
 							{
 								if (this.playerl.get(i).getSl().getA() <= 0) {
 
-								Attack att = database.createAtt("frostArrow",idSpell,((attackPlayer) e.object).team);
+								Attack att = database.createAtt("frostArrow",idSpell,this.playerl.get(i).getTeam());
 								idSpell++;
 								if (((attackPlayer) e.object).direction == 0) {
 									att.setXbeg(((attackPlayer) e.object).x  - 10);
@@ -458,7 +462,7 @@ public class ServerGame implements Runnable {
 							{
 								if (this.playerl.get(i).getSl().getE() <= 0) {
 
-								Attack att = database.createAtt("pinkArrow", idSpell,((attackPlayer) e.object).team);
+								Attack att = database.createAtt("pinkArrow", idSpell,this.playerl.get(i).getTeam());
 								idSpell++;
 								if (((attackPlayer) e.object).direction == 0) {
 									att.setXbeg(((attackPlayer) e.object).x  - 10);
@@ -494,7 +498,7 @@ public class ServerGame implements Runnable {
 							{
 								if (this.playerl.get(i).getSl().getR() <= 0) {
 
-								this.circleArrow((attackPlayer) e.object);
+								this.circleArrow((attackPlayer) e.object, this.playerl.get(i).getTeam());
 								this.playerl.get(i).sl.setR(5000);
 								}
 							}
@@ -504,8 +508,8 @@ public class ServerGame implements Runnable {
 			}
 		}
 	}
-	private void circleArrow(attackPlayer attacker) {
-		Attack att = database.createAtt("circleArrow", idSpell, attacker.team);
+	private void circleArrow(attackPlayer attacker, int team) {
+		Attack att = database.createAtt("circleArrow", idSpell, team);
 		idSpell++;
 		att.setXbeg(attacker.x - 13);
 		att.setYbeg(attacker.y - 150);
@@ -513,7 +517,7 @@ public class ServerGame implements Runnable {
 		att.setDirection(0);
 		this.spell.add(att);
 		
-		att = database.createAtt("circleArrow", idSpell,attacker.team);
+		att = database.createAtt("circleArrow", idSpell,team);
 		idSpell++;
 		att.setXbeg(attacker.x-100);
 		att.setYbeg(attacker.y - 23);
@@ -521,7 +525,7 @@ public class ServerGame implements Runnable {
 		att.setDirection(1);
 		this.spell.add(att);
 
-		att = database.createAtt("circleArrow", idSpell,attacker.team);
+		att = database.createAtt("circleArrow", idSpell,team);
 		idSpell++;
 		att.setXbeg(attacker.x - 13);
 		att.setYbeg(attacker.y + 10);
@@ -529,7 +533,7 @@ public class ServerGame implements Runnable {
 		att.setDirection(2);
 		this.spell.add(att);
 		
-		att = database.createAtt("circleArrow", idSpell,attacker.team);
+		att = database.createAtt("circleArrow", idSpell,team);
 		idSpell++;
 		att.setXbeg(attacker.x + 17 );
 		att.setYbeg(attacker.y - 23);
@@ -537,7 +541,7 @@ public class ServerGame implements Runnable {
 		att.setDirection(3);
 		this.spell.add(att);
 		
-		att = database.createAtt("circleArrow", idSpell,attacker.team);
+		att = database.createAtt("circleArrow", idSpell,team);
 		idSpell++;
 		att.setXbeg(attacker.x + 15 );
 		att.setYbeg(attacker.y - 105);
@@ -546,7 +550,7 @@ public class ServerGame implements Runnable {
 		att.setDirection(4);
 		this.spell.add(att);
 		
-		att = database.createAtt("circleArrow", idSpell,attacker.team);
+		att = database.createAtt("circleArrow", idSpell,team);
 		idSpell++;
 		att.setXbeg(attacker.x - 80 );
 		att.setYbeg(attacker.y - 105);
@@ -555,7 +559,7 @@ public class ServerGame implements Runnable {
 		att.setDirection(5);
 		this.spell.add(att);
 		
-		att = database.createAtt("circleArrow", idSpell,attacker.team);
+		att = database.createAtt("circleArrow", idSpell,team);
 		idSpell++;
 		att.setXbeg(attacker.x + 10 );
 		att.setYbeg(attacker.y - 23);
@@ -564,9 +568,8 @@ public class ServerGame implements Runnable {
 		att.setDirection(6);
 		this.spell.add(att);
 		
-		att = database.createAtt("circleArrow", idSpell,attacker.team);
+		att = database.createAtt("circleArrow", idSpell,team);
 		idSpell++;
-		att.setTeam(2);
 		att.setXbeg(attacker.x - 80 );
 		att.setYbeg(attacker.y - 23);
 		att.setXend(att.getXbeg() - 200);
