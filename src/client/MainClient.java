@@ -101,7 +101,7 @@ public class MainClient {
 					AppGameContainer app;
 					try {
 						window.setVisible(false);
-						app = new AppGameContainer(new ClientGame(g.tcpport, g.udpport), 1024, 768, false);
+						app = new AppGameContainer(new ClientGame(g.tcpport, g.udpport,MainClient.clientpage.selected), 1024, 768, false);
 						app.setAlwaysRender(true);
 						app.setTargetFrameRate(120);
 						app.start();

@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.newdawn.slick.Input;
 
+import client.MainClient;
 import utils.Attack;
 import utils.Effect;
 import utils.Event;
@@ -211,7 +212,7 @@ public class ServerGame implements Runnable {
 		if (spell.size() != 0) {
 			for (int i = 0 ; i < spell.size(); i++) {
 				Attack att = spell.get(i); 
-			//	if (!(att.getTeam() == player.getTeam())) {
+				if ((att.getTeam() != player.getTeam())) {
 				if ((att.getXbeg() >= player.getX() - 20 && att.getXbeg() <= player.getX()+20) && ((att.getYbeg() >= player.getY() - 20 && att.getYbeg() <= player.getY()+20)))
 				{
 					if (att.getEffect().equals("stun")) {
@@ -258,7 +259,7 @@ public class ServerGame implements Runnable {
 				}
 			}
 		}
-	//	}
+		}
 		return false;
 	}
 	
@@ -273,6 +274,7 @@ public class ServerGame implements Runnable {
 					addPlayer ptoadd = (addPlayer)e.object;
 					Player p = new Player();
 					p.c = e.c;
+					p.setType(ptoadd.type);
 					p.setName(ptoadd.name);
 					p.setX(ptoadd.x);
 					p.setY(ptoadd.y);
@@ -288,6 +290,7 @@ public class ServerGame implements Runnable {
 					this.playerl.add(p);
 					addPlayer pto = new addPlayer();
 					pto.name = p.getName();
+					pto.type = p.getType();
 					pto.x = (int)p.getX();
 					pto.y = (int)p.getY();
 					Event event = new Event(null, pto);
@@ -557,12 +560,13 @@ public class ServerGame implements Runnable {
 		att.setXbeg(attacker.x + 10 );
 		att.setYbeg(attacker.y - 23);
 		att.setXend(att.getXbeg() + 200);
-		att.setYend(att.getYbeg() + 250);
+		att.setYend(att.getYbeg() + 200);
 		att.setDirection(6);
 		this.spell.add(att);
 		
 		att = database.createAtt("circleArrow", idSpell,attacker.team);
 		idSpell++;
+		att.setTeam(2);
 		att.setXbeg(attacker.x - 80 );
 		att.setYbeg(attacker.y - 23);
 		att.setXend(att.getXbeg() - 200);
@@ -570,7 +574,6 @@ public class ServerGame implements Runnable {
 		att.setDirection(7);
 		this.spell.add(att);
 		
-		System.out.println(this.spell);
 	}
 	/**
 	 * set all the event to send at the list shared

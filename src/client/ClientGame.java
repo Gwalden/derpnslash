@@ -60,7 +60,7 @@ public class ClientGame extends BasicGame {
 	public Player player;
 	private Camera camera;
 	public static NetworkClient client;
-	
+	public String type;
 	public int tcpport;
 	public int udpport;
 
@@ -72,8 +72,12 @@ public class ClientGame extends BasicGame {
 		app.start();
 	}
 */
-	public ClientGame(int tport, int uport) {
+	public ClientGame(int tport, int uport, int type) {
 		super("derpnslash");
+		if (type == 1)
+			this.type = "hunter";
+		else
+			this.type = "wizard";
 		this.tcpport = tport;
 		this.udpport= uport;
 	}
@@ -90,12 +94,14 @@ public class ClientGame extends BasicGame {
 		this.container = container;
 		this.map = new Map();
 		this.player = new Player();
+		this.player.setType(type);
 		this.camera = new Camera(player);
 		this.map.init();
 		this.player.init();
 		client = new NetworkClient(this);
 		new Thread(client).start();
 		addPlayer p = new addPlayer();
+		p.type = this.player.getType();
 		p.name = this.player.getName();
 		p.x = (int)this.player.getX();
 		p.y = (int)this.player.getY();
@@ -142,6 +148,7 @@ public class ClientGame extends BasicGame {
 					return;
 				Player p = new Player();
 				p.setName(ptoadd.name);
+				p.setType(ptoadd.type);
 				p.setX(ptoadd.x);
 				p.setY(ptoadd.y);
 				p.init();

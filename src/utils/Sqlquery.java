@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class Sqlquery {
 
-	private final String SQLURL = "jdbc:postgresql://localhost/derpnslash";
+	//private final String SQLURL = "jdbc:postgresql://localhost/derpnslash";
 	@SuppressWarnings("unused")
 	private final String SQLLOG = "derpnslash";
 	@SuppressWarnings("unused")
@@ -18,7 +18,7 @@ public class Sqlquery {
 	public Sqlquery() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			this.dbco = DriverManager.getConnection(SQLURL);
+			this.dbco = DriverManager.getConnection("jdbc:postgresql://localhost:5433/Test","postgres","s-xw5Sve");
 		} catch (ClassNotFoundException e) {
 			System.err.println("enable to load postgresqldriver");
 			e.printStackTrace();

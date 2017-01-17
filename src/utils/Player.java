@@ -18,7 +18,7 @@ import utils.Network.movePlayer;
 
 public class Player {
 
-	private String type = "wizard";	
+	private String type;	
 	public SpellLauncher sl = new SpellLauncher();
 	private int team = 2;
 	public int id;
@@ -47,6 +47,7 @@ public class Player {
 		movelist= new LinkedList<>();
 		String ressources;
 		rond = new Color(0, 0, 0);
+		System.out.println(this.type);
 		SpriteSheet spriteSheet;
 		if (this.type.equals("hunter"))
 		{
@@ -185,11 +186,11 @@ public class Player {
 	
 	public void keyReleased(int key, char c) {
 		switch (key) {
-		case Input.KEY_W:
+		case Input.KEY_Z:
 			movelist.remove(new Integer(0));
 			this.sendmove();
 			break;
-		case Input.KEY_A:
+		case Input.KEY_Q:
 			movelist.remove(new Integer(1));
 			this.sendmove();
 			break;
@@ -201,7 +202,7 @@ public class Player {
 			movelist.remove(new Integer(3));
 			this.sendmove();
 			break;
-		case Input.KEY_Q:
+		case Input.KEY_A:
 			this.attacking = false;
 			break;
 		case Input.KEY_E:
