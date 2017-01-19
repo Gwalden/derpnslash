@@ -214,7 +214,7 @@ public class ServerGame implements Runnable {
 			for (int i = 0 ; i < spell.size(); i++) {
 				Attack att = spell.get(i); 
 				if ((att.getTeam() != player.getTeam())) {
-				if ((att.getXbeg() >= player.getX() - 20 && att.getXbeg() <= player.getX()+20) && ((att.getYbeg() >= player.getY() - 20 && att.getYbeg() <= player.getY()+20)))
+				if ((att.getXbeg() >= player.getX() - 30 && att.getXbeg() <= player.getX()+30) && ((att.getYbeg() >= player.getY() - 30 && att.getYbeg() <= player.getY()+30)))
 				{
 					if (att.getEffect().equals("stun")) {
 						Effect eff = new Effect(att.getEffect(),5000);
@@ -324,26 +324,26 @@ public class ServerGame implements Runnable {
 									if (((attackPlayer) e.object).direction == 0) {
 										att.setXbeg(((attackPlayer) e.object).x  - 10);
 										att.setYbeg(((attackPlayer) e .object).y - 100);
-										att.setYend(att.getYbeg() - 120);
+										att.setYend(att.getYbeg() - 320);
 									}
 									else if (((attackPlayer) e.object).direction == 1) {
 										att.setXbeg(((attackPlayer) e.object).x - 70 );
 										att.setYbeg(((attackPlayer) e .object).y - 30);
-										att.setXend(att.getXbeg() - 100);
+										att.setXend(att.getXbeg() - 300);
 									}
 									else if (((attackPlayer) e.object).direction == 2) {
 										att.setXbeg(((attackPlayer) e.object).x - 10 );
 										att.setYbeg(((attackPlayer) e .object).y - 23);
-										att.setYend(att.getYbeg() + 100);
+										att.setYend(att.getYbeg() + 300);
 									}
 									else if (((attackPlayer) e.object).direction == 3) {	
 										att.setXbeg(((attackPlayer) e.object).x + 20 );
 										att.setYbeg(((attackPlayer) e .object).y - 30);
-										att.setXend(att.getXbeg() + 100);
+										att.setXend(att.getXbeg() + 300);
 									}
 									att.setDirection(((attackPlayer) e.object).direction);
 									this.spell.add(att);
-									this.playerl.get(i).sl.setA(5000);
+									this.playerl.get(i).sl.setA(4000);
 								}
 							}
 						}
@@ -359,26 +359,26 @@ public class ServerGame implements Runnable {
 									if (((attackPlayer) e.object).direction == 0) {
 										att.setXbeg(((attackPlayer) e.object).x  - 10);
 										att.setYbeg(((attackPlayer) e .object).y - 100);
-										att.setYend(att.getYbeg() - 120);
+										att.setYend(att.getYbeg() - 220);
 									}
 									else if (((attackPlayer) e.object).direction == 1) {
 										att.setXbeg(((attackPlayer) e.object).x - 70 );
 										att.setYbeg(((attackPlayer) e .object).y - 30);
-										att.setXend(att.getXbeg() - 100);
+										att.setXend(att.getXbeg() - 200);
 									}
 									else if (((attackPlayer) e.object).direction == 2) {
 										att.setXbeg(((attackPlayer) e.object).x - 10 );
 										att.setYbeg(((attackPlayer) e .object).y - 23);
-										att.setYend(att.getYbeg() + 100);
+										att.setYend(att.getYbeg() + 200);
 									}
 									else if (((attackPlayer) e.object).direction == 3) {	
 										att.setXbeg(((attackPlayer) e.object).x + 20 );
 										att.setYbeg(((attackPlayer) e .object).y - 30);
-										att.setXend(att.getXbeg() + 100);
+										att.setXend(att.getXbeg() + 200);
 									}
 									att.setDirection(((attackPlayer) e.object).direction);
 									this.spell.add(att);
-									this.playerl.get(i).sl.setE(5000);
+									this.playerl.get(i).sl.setE(6000);
 								}
 							}
 						}
@@ -431,22 +431,22 @@ public class ServerGame implements Runnable {
 								if (((attackPlayer) e.object).direction == 0) {
 									att.setXbeg(((attackPlayer) e.object).x  - 10);
 									att.setYbeg(((attackPlayer) e .object).y - 100);
-									att.setYend(att.getYbeg() - 120);
+									att.setYend(att.getYbeg() - 420);
 								}
 								else if (((attackPlayer) e.object).direction == 1) {
 									att.setXbeg(((attackPlayer) e.object).x - 70 );
 									att.setYbeg(((attackPlayer) e .object).y - 30);
-									att.setXend(att.getXbeg() - 100);
+									att.setXend(att.getXbeg() - 400);
 								}
 								else if (((attackPlayer) e.object).direction == 2) {
 									att.setXbeg(((attackPlayer) e.object).x - 10 );
 									att.setYbeg(((attackPlayer) e .object).y - 23);
-									att.setYend(att.getYbeg() + 100);
+									att.setYend(att.getYbeg() + 400);
 								}
 								else if (((attackPlayer) e.object).direction == 3) {	
 									att.setXbeg(((attackPlayer) e.object).x + 20 );
 									att.setYbeg(((attackPlayer) e .object).y - 30);
-									att.setXend(att.getXbeg() + 100);
+									att.setXend(att.getXbeg() + 400);
 								}
 								att.setDirection(((attackPlayer) e.object).direction);
 								this.spell.add(att);
